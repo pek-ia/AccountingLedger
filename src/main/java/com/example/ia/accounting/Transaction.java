@@ -22,6 +22,21 @@ public class Transaction {
         this.amount = amount;
     }
 
+    public static Transaction fromFileText(String s) {
+        String[] fields = s.split("\\|");
+        LocalDate date = LocalDate.parse(fields[0]);
+        LocalTime time = LocalTime.parse(fields[1]);
+        String description = fields[2];
+        String payee = fields[3];
+        double amount = Double.parseDouble(fields[4]);
+
+        return new Transaction(date, time, description, payee, amount);
+    }
+
+    public String toFileText(){
+        return String.format("%s|%s|%s|%s|amount", date, time, description, payee, amount);
+    }
+
     public LocalDate getDate() {
         return date;
     }
