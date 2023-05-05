@@ -17,12 +17,14 @@ public class CliScreen {
             Select an option (by number):  \s
             """;
 
+    private static final String defaultStatus = "Ready";
 
     public CliScreen(Ledger ledger){
         this.ledger = ledger;
         this.prompt = defaultPrompt;
         this.heading = defaultHeading;
         this.menu = defaultMenu;
+        this.status = defaultStatus;
     }
 
 
@@ -31,12 +33,15 @@ public class CliScreen {
     private String menu;
     private String heading;
 
+    private String status;
+
     public void show() {
         while(true) {
             clearScreen();
             printHeading();
             printContents();
             printMenu();
+            printStatus();
             String input = requestInput();
             switch (input){
                 case "0":
@@ -44,11 +49,18 @@ public class CliScreen {
                     return;
                 default:
                     // Unrecognized input - break out of loop to redisplay the menu
+                    badInput();
                     break;
             }
         }
     }
 
+    private void badInput(){
+        status = "I'm sorry, I didn't recognize that.  Please try again";
+    }
+    private void printStatus() {
+        System.out.println(status);
+    }
 
 
     private String requestInput() {
@@ -72,6 +84,7 @@ public class CliScreen {
 
 
     private void clearScreen() {
+        // Print ANSI escape sequence to clear terminal screen
         System.out.print("\033[2J");
 
     }

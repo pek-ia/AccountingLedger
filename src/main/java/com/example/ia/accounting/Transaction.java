@@ -14,4 +14,34 @@ public class Transaction {
     private String payee;
     private double amount;
 
+    public Transaction(LocalDate date, LocalTime time, String description, String payee, double amount) {
+        this.date = date;
+        this.time = time;
+        this.description = description;
+        this.payee = payee;
+        this.amount = amount;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getPayee() {
+        return payee;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
 }
+
+
