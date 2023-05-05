@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class CliScreen {
 
-    private static final Scanner scanner = new Scanner(System.in);
 
     private static final String defaultHeading = """
                         DEFAULT MENU
@@ -18,6 +17,8 @@ public class CliScreen {
             """;
 
     private static final String defaultStatus = "Ready";
+
+    private final Scanner scanner = new Scanner(System.in);
 
     public CliScreen(Ledger ledger){
         this.ledger = ledger;

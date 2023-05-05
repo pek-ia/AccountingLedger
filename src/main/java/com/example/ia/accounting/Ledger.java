@@ -30,8 +30,8 @@ public class Ledger {
         while ((s = ledgerFileReader.readLine()) != null) {
             Transaction t = Transaction.fromFileText(s);
             transactions.add(t);
-            return transactions.size();
         }
+        return transactions.size();
     }
 
     // Saves ledger file
@@ -45,7 +45,7 @@ public class Ledger {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return 0;
+        return transactions.size();
     }
 
     public void add(Transaction t) {
@@ -54,8 +54,7 @@ public class Ledger {
 
 
     public ArrayList<Transaction> findAll(){
-        ArrayList<Transaction> values = transactions;
-        return values;
+        return transactions;
     }
 
     public ArrayList<Transaction> findCredits(){
