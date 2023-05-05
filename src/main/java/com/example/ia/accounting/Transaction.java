@@ -1,6 +1,7 @@
 package com.example.ia.accounting;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 // This class represents a ledger transaction
@@ -37,12 +38,20 @@ public class Transaction {
         return String.format("%s|%s|%s|%s|%8.2f", date, time, description, payee, amount);
     }
 
+    public String toScreenText(){
+        return String.format("%10s  %-30s %-30s %8.2f\n", date, payee, description, amount);
+    }
+
     public LocalDate getDate() {
         return date;
     }
 
     public LocalTime getTime() {
         return time;
+    }
+
+    public LocalDateTime getTimestamp(){
+        return LocalDateTime.of(date, time);
     }
 
     public String getDescription() {

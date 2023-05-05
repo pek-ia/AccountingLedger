@@ -1,5 +1,7 @@
 package com.example.ia.accounting;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class CliScreen {
@@ -10,17 +12,24 @@ public class CliScreen {
                         ------------
             """;
     private static final String defaultMenu = """
-                0   Quit
+                X   Quit this screen
             """;
     private static final String defaultPrompt = """
-            Select an option (by number):  \s
+            Select an option (by letter):  \s
             """;
 
     private static final String defaultStatus = "Ready";
 
-    private final Scanner scanner = new Scanner(System.in);
 
-    public CliScreen(Ledger ledger){
+    protected final Scanner scanner = new Scanner(System.in);
+
+    protected final Ledger ledger;
+    protected String prompt;
+    protected String menu;
+    protected String heading;
+    protected String status;
+
+    public CliScreen(Ledger ledger) {
         this.ledger = ledger;
         this.prompt = defaultPrompt;
         this.heading = defaultHeading;
@@ -29,45 +38,72 @@ public class CliScreen {
     }
 
 
-    private Ledger ledger;
-    private String prompt;
-    private String menu;
-    private String heading;
-
-    private String status;
-
     public void show() {
-        while(true) {
+        String input = "";
+        do {
             clearScreen();
             printHeading();
             printContents();
             printMenu();
             printStatus();
-            String input = requestInput();
-            switch (input){
-                case "0":
-                    // Return to previous screen
-                    return;
-                default:
-                    // Unrecognized input - break out of loop to redisplay the menu
-                    badInput();
-                    break;
-            }
+        } while (!doInput());
+    }
+
+    protected boolean doInput() {
+        String input = requestStringInput();
+        switch (input) {
+            case "X":
+                // Return to previous screen
+                return true;
+            default:
+                // Unrecognized input - break out of loop to redisplay the menu
+                badInput();
+                return false;
         }
     }
 
-    private void badInput(){
+    protected void badInput() {
         status = "I'm sorry, I didn't recognize that.  Please try again";
     }
+
     private void printStatus() {
         System.out.println(status);
     }
 
 
-    private String requestInput() {
+    protected String requestStringInput() {
         System.out.print(prompt);
         return scanner.nextLine();
 
+    }
+
+    protected String requestStringInput(String prompt) {
+        System.out.print(prompt);
+        return scanner.nextLine();
+
+    }
+
+    protected double requestDoubleInput(String prompt) {
+        String input = requestStringInput(prompt);
+        return Double.parseDouble(input);
+    }
+
+    protected LocalDate requestDateInput(String prompt) {
+        String input = requestStringInput(prompt);
+        if (input.equals("")) {
+            return LocalDate.now();
+        } else {
+            return LocalDate.parse(input);
+        }
+    }
+
+    protected LocalTime requestTimeInput(String prompt) {
+        String input = requestStringInput(prompt);
+        if (input.equals("")) {
+            return LocalTime.now();
+        } else {
+            return LocalTime.parse(input);
+        }
     }
 
     private void printHeading() {
