@@ -8,7 +8,7 @@ import java.time.LocalTime;
 //   If a credit, amount is positive
 //   If a debit, amount is negative
 
-public class Transaction {
+public class Transaction implements Comparable<Transaction> {
     private final LocalDate date;
     private final LocalTime time;
     private final String description;
@@ -66,6 +66,11 @@ public class Transaction {
         return amount;
     }
 
+    @Override
+    public int compareTo(Transaction o) {
+        // Descending sort by comparing LocalDateTime
+        return o.getTimestamp().compareTo(this.getTimestamp());
+    }
 }
 
 

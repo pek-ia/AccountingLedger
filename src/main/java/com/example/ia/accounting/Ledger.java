@@ -1,7 +1,10 @@
 package com.example.ia.accounting;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 // This class represents a Ledger
@@ -31,6 +34,7 @@ public class Ledger {
             Transaction t = Transaction.fromFileText(s);
             transactions.add(t);
         }
+        Collections.sort(transactions);
         return transactions.size();
     }
 
@@ -62,6 +66,7 @@ public class Ledger {
         for (Transaction t: transactions){
             if (t.getAmount() > 0.0) values.add(t);
         }
+        Collections.sort(values);
         return values;
     }
 
@@ -70,14 +75,32 @@ public class Ledger {
         for (Transaction t: transactions){
             if (t.getAmount() <= 0.0) values.add(t);
         }
+        Collections.sort(values);
         return values;
     }
 
-    public ArrayList<Transaction> findByPayee(String payee){
+    public ArrayList<Transaction> findLikePayee(String payee){
         ArrayList<Transaction> values = new ArrayList<>();
         for (Transaction t: transactions){
-            if (t.getPayee().equals(payee)) values.add(t);
+            if (t.getPayee().contains(payee)) values.add(t);
         }
+        Collections.sort(values);
+        return values;
+    }
+    public ArrayList<Transaction> findByMonth(Month month){
+        ArrayList<Transaction> values = new ArrayList<>();
+        for (Transaction t: transactions){
+            if (t.getDate().getMonth().equals(month)) values.add(t);
+        }
+        Collections.sort(values);
+        return values;
+    }
+    public ArrayList<Transaction> findByYear(int year){
+        ArrayList<Transaction> values = new ArrayList<>();
+        for (Transaction t: transactions){
+            if (t.getDate().getYear() == year) values.add(t);
+        }
+        Collections.sort(values);
         return values;
     }
 }

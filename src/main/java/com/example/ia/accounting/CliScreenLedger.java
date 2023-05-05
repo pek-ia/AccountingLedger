@@ -47,26 +47,16 @@ public class CliScreenLedger extends CliScreen {
 
     private void displayPayments() {
         System.out.println("Listing your Payments:\n");
-        for (Transaction t : ledger.findDebits()) {
-            System.out.print(t.toScreenText());
-        }
-        status = "OK";
-
+        displayTransactions(ledger.findDebits());
     }
 
     private void displayDeposits() {
         System.out.println("Listing your Deposits:\n");
-        for (Transaction t : ledger.findCredits()) {
-            System.out.print(t.toScreenText());
-        }
-        status = "OK";
+        displayTransactions(ledger.findCredits());
     }
 
     private void displayAllTransactions() {
-        for (Transaction t : ledger.findAll()) {
-            System.out.print(t.toScreenText());
-        }
-        status = "OK";
+        displayTransactions(ledger.findAll());
     }
 
 }

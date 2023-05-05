@@ -72,8 +72,8 @@ public class CliScreenMain extends CliScreen {
         if (amount < 0.0) amount = -amount;
         String payer = requestStringInput("Enter the Payer: ");
         String description = requestStringInput("Enter a Description: ");
-        LocalDate date = requestDateInput("Enter the date (or return to use Today):");
-        LocalTime time = requestTimeInput("Enter the time (or return to use Now): ");
+        LocalDate date = requestDateInput("Enter the date (YYYY-MM-DD or return to use Today):");
+        LocalTime time = requestTimeInput("Enter the time (HH:MM:SS or return to use Now): ");
 
         Transaction t = new Transaction(date, time, description, payer, amount);
         ledger.add(t);

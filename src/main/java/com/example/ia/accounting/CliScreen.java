@@ -2,6 +2,7 @@ package com.example.ia.accounting;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Scanner;
 
 public class CliScreen {
@@ -42,10 +43,9 @@ public class CliScreen {
         String input = "";
         do {
             clearScreen();
-            printHeading();
-            printContents();
-            printMenu();
-            printStatus();
+            displayHeading();
+            displayMenu();
+            displayStatus();
         } while (!doInput());
     }
 
@@ -68,7 +68,7 @@ public class CliScreen {
         status = "I'm sorry, I didn't recognize that.  Please try again";
     }
 
-    private void printStatus() {
+    private void displayStatus() {
         System.out.println(status);
     }
 
@@ -108,17 +108,26 @@ public class CliScreen {
         }
     }
 
-    private void printHeading() {
+    private void displayHeading() {
         System.out.println(heading);
     }
 
-    private void printMenu() {
+    private void displayMenu() {
         System.out.println(menu);
 
     }
 
-    private void printContents() {
+    protected void displayTransactions(List<Transaction> list) {
+        for(Transaction t: list){
+            displayTransaction(t);
+        }
+        status = "OK";
+        requestStringInput("\nHit Enter to return to the menu:");
 
+    }
+
+    protected void displayTransaction(Transaction t){
+        System.out.print(t.toScreenText());
     }
 
 
