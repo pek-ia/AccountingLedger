@@ -23,25 +23,6 @@ public class Transaction implements Comparable<Transaction> {
         this.amount = amount;
     }
 
-    public static Transaction fromFileText(String s) {
-        String[] fields = s.split("\\|");
-        LocalDate date = LocalDate.parse(fields[0]);
-        LocalTime time = LocalTime.parse(fields[1]);
-        String description = fields[2];
-        String payee = fields[3];
-        double amount = Double.parseDouble(fields[4]);
-
-        return new Transaction(date, time, description, payee, amount);
-    }
-
-    public String toFileText(){
-        return String.format("%s|%s|%s|%s|%8.2f", date, time, description, payee, amount);
-    }
-
-    public String toScreenText(){
-        return String.format("%10s  %-30s %-30s %8.2f\n", date, payee, description, amount);
-    }
-
     public LocalDate getDate() {
         return date;
     }

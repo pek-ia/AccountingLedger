@@ -10,7 +10,7 @@ package com.example.ia.accounting;
 
 public class AccountingLedgerApp {
 
-    private static String defaultLedgerFile = "./src/main/resources/transactions.csv";
+    private static final String defaultLedgerFile = "./src/main/resources/transactions.csv";
 
     static CliScreen mainScreen;
     static CliScreen ledgerScreen;

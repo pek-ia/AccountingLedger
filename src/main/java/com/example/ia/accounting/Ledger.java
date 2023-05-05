@@ -2,6 +2,7 @@ package com.example.ia.accounting;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,11 +28,26 @@ public class Ledger {
         }
     }
 
+    private Transaction fromFileText(String s) {
+        String[] fields = s.split("\\|");
+        LocalDate date = LocalDate.parse(fields[0]);
+        LocalTime time = LocalTime.parse(fields[1]);
+        String description = fields[2];
+        String payee = fields[3];
+        double amount = Double.parseDouble(fields[4]);
+
+        return new Transaction(date, time, description, payee, amount);
+    }
+
+    private String toFileText(Transaction t){
+        return String.format("%s|%s|%s|%s|%8.2f", t.getDate(), t.getTime(), t.getDescription(), t.getPayee(), t.getAmount());
+    }
+
     // Reads ledger file into ArrayList
-    public int loadAllFromFile() throws IOException {
+    private int loadAllFromFile() throws IOException {
         String s;
         while ((s = ledgerFileReader.readLine()) != null) {
-            Transaction t = Transaction.fromFileText(s);
+            Transaction t = fromFileText(s);
             transactions.add(t);
         }
         Collections.sort(transactions);
@@ -39,10 +55,10 @@ public class Ledger {
     }
 
     // Saves ledger file
-    public int saveAllToFile() {
+    private int saveAllToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ledgerFileName))) {
             for (Transaction t : transactions) {
-                writer.write(t.toFileText());
+                writer.write(toFileText(t));
                 writer.newLine();
             }
 
@@ -57,6 +73,9 @@ public class Ledger {
     }
 
 
+    /*
+     *  FINDER METHODS
+     */
     public ArrayList<Transaction> findAll(){
         return transactions;
     }
@@ -87,6 +106,7 @@ public class Ledger {
         Collections.sort(values);
         return values;
     }
+
     public ArrayList<Transaction> findByMonth(Month month){
         ArrayList<Transaction> values = new ArrayList<>();
         for (Transaction t: transactions){
@@ -95,6 +115,7 @@ public class Ledger {
         Collections.sort(values);
         return values;
     }
+
     public ArrayList<Transaction> findByYear(int year){
         ArrayList<Transaction> values = new ArrayList<>();
         for (Transaction t: transactions){

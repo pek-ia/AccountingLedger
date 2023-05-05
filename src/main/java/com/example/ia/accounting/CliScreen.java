@@ -40,7 +40,6 @@ public class CliScreen {
 
 
     public void show() {
-        String input = "";
         do {
             clearScreen();
             displayHeading();
@@ -118,6 +117,7 @@ public class CliScreen {
     }
 
     protected void displayTransactions(List<Transaction> list) {
+        System.out.println("Listing matching Transactions\n");
         for(Transaction t: list){
             displayTransaction(t);
         }
@@ -127,7 +127,11 @@ public class CliScreen {
     }
 
     protected void displayTransaction(Transaction t){
-        System.out.print(t.toScreenText());
+        System.out.println(toScreenText(t));
+    }
+
+    private String toScreenText(Transaction t){
+        return String.format("%10s  %-30s %-30s %8.2f", t.getDate(), t.getPayee(), t.getDescription(), t.getAmount());
     }
 
 
