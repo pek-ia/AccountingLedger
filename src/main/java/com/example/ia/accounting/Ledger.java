@@ -11,31 +11,33 @@ import java.util.ArrayList;
 public class Ledger {
 
     private ArrayList<Transaction> transactions = new ArrayList<>();
-    private String ledgerFile;
+    private String ledgerFileName;
+    private BufferedReader ledgerFileReader;
 
     public Ledger(String ledgerFile) {
-        this.ledgerFile = ledgerFile;
-        loadAllFromFile();
-    }
-
-    // Reads ledger file into ArrayList
-    public int loadAllFromFile(){
-        try (BufferedReader reader = new BufferedReader(new FileReader(ledgerFile))) {
-            String s;
-            while ((s = reader.readLine()) != null) {
-                Transaction t = Transaction.fromFileText(s);
-                transactions.add(t);
-            }
+        this.ledgerFileName = ledgerFile;
+        try {
+            ledgerFileReader = new BufferedReader(new FileReader(ledgerFileName));
+            loadAllFromFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return 0;
+    }
+
+    // Reads ledger file into ArrayList
+    public int loadAllFromFile() throws IOException {
+        String s;
+        while ((s = ledgerFileReader.readLine()) != null) {
+            Transaction t = Transaction.fromFileText(s);
+            transactions.add(t);
+            return transactions.size();
+        }
     }
 
     // Saves ledger file
-    public int saveAllToFile(){
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ledgerFile))) {
-            for (Transaction t: transactions){
+    public int saveAllToFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ledgerFileName))) {
+            for (Transaction t : transactions) {
                 writer.write(t.toFileText());
                 writer.newLine();
             }
@@ -44,5 +46,39 @@ public class Ledger {
             throw new RuntimeException(e);
         }
         return 0;
+    }
+
+    public void add(Transaction t) {
+        transactions.add(t);
+    }
+
+
+    public ArrayList<Transaction> findAll(){
+        ArrayList<Transaction> values = transactions;
+        return values;
+    }
+
+    public ArrayList<Transaction> findCredits(){
+        ArrayList<Transaction> values = new ArrayList<>();
+        for (Transaction t: transactions){
+            if (t.getAmount() > 0.0) values.add(t);
+        }
+        return values;
+    }
+
+    public ArrayList<Transaction> findDebits(){
+        ArrayList<Transaction> values = new ArrayList<>();
+        for (Transaction t: transactions){
+            if (t.getAmount() <= 0.0) values.add(t);
+        }
+        return values;
+    }
+
+    public ArrayList<Transaction> findByPayee(String payee){
+        ArrayList<Transaction> values = new ArrayList<>();
+        for (Transaction t: transactions){
+            if (t.getPayee().equals(payee)) values.add(t);
+        }
+        return values;
     }
 }
