@@ -1,6 +1,5 @@
 package com.example.ia.accounting;
-import java.time.LocalDate;
-import java.time.LocalTime;
+
 public class CliScreenReports extends CliScreen {
 
     public CliScreenReports(Ledger ledger){
@@ -18,7 +17,7 @@ public class CliScreenReports extends CliScreen {
                 5    Search by Payee
                 0    Back to Ledger Menu
             """;
-        prompt = """
+        menu_prompt = """
             Select an option (by number):  \s
             """;
 
@@ -30,45 +29,39 @@ public class CliScreenReports extends CliScreen {
     @Override
     protected boolean doInput() {
         String input = requestStringInput();
-        switch (input){
-            case "1":
-                displayMonthToDate();
-                break;
-            case "2":
-                displayPreviousMonth();
-                break;
-            case "3":
-                displayYearToDate();
-                break;
-            case "4":
-                displayPreviousYear();
-                break;
-            case "5":
-                searchByPayee();
-                break;
-            case "0":
+        switch (input) {
+            case "1" -> displayMonthToDate();
+            case "2" -> displayPreviousMonth();
+            case "3" -> displayYearToDate();
+            case "4" -> displayPreviousYear();
+            case "5" -> searchByPayee();
+            case "0" -> {
                 return true;
-            default:
-                badInput();
+            }
+            default -> badInput();
         }
         return false;
 
     }
 
     private void searchByPayee() {
+        status = "OK";
     }
 
     private void displayPreviousYear() {
+        status = "OK";
     }
 
     private void displayYearToDate() {
+        status = "OK";
     }
 
     private void displayPreviousMonth() {
+        status = "OK";
     }
 
     private void displayMonthToDate() {
-        
+        status = "OK";
     }
 
 

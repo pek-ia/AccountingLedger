@@ -24,17 +24,17 @@ public class CliScreen {
     protected final Scanner scanner = new Scanner(System.in);
 
     protected final Ledger ledger;
-    protected String prompt;
+    protected String menu_prompt;
     protected String menu;
     protected String heading;
     protected String status;
 
     public CliScreen(Ledger ledger) {
         this.ledger = ledger;
-        this.prompt = defaultPrompt;
-        this.heading = defaultHeading;
-        this.menu = defaultMenu;
-        this.status = defaultStatus;
+        menu_prompt = defaultPrompt;
+        heading = defaultHeading;
+        menu = defaultMenu;
+        status = defaultStatus;
     }
 
 
@@ -52,13 +52,15 @@ public class CliScreen {
     protected boolean doInput() {
         String input = requestStringInput();
         switch (input) {
-            case "X":
+            case "X" -> {
                 // Return to previous screen
                 return true;
-            default:
+            }
+            default -> {
                 // Unrecognized input - break out of loop to redisplay the menu
                 badInput();
                 return false;
+            }
         }
     }
 
@@ -72,7 +74,7 @@ public class CliScreen {
 
 
     protected String requestStringInput() {
-        System.out.print(prompt);
+        System.out.print(menu_prompt);
         return scanner.nextLine();
 
     }

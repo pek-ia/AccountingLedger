@@ -1,8 +1,5 @@
 package com.example.ia.accounting;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 public class CliScreenLedger extends CliScreen {
     public CliScreenLedger(Ledger ledger) {
         super(ledger);
@@ -18,7 +15,7 @@ public class CliScreenLedger extends CliScreen {
                     R    Reports Menu
                     H    Return to Home
                 """;
-        prompt = """
+        menu_prompt = """
                 Select an option (by letter):  \s
                 """;
 
@@ -31,22 +28,14 @@ public class CliScreenLedger extends CliScreen {
     protected boolean doInput() {
         String input = requestStringInput();
         switch (input.toUpperCase()) {
-            case "A":
-                displayAllTransactions();
-                break;
-            case "D":
-                displayDeposits();
-                break;
-            case "P":
-                displayPayments();
-                break;
-            case "R":
-                showReportsScreen();
-                break;
-            case "H":
+            case "A" -> displayAllTransactions();
+            case "D" -> displayDeposits();
+            case "P" -> displayPayments();
+            case "R" -> showReportsScreen();
+            case "H" -> {
                 return true;
-            default:
-                badInput();
+            }
+            default -> badInput();
         }
         return false;
 
@@ -61,6 +50,7 @@ public class CliScreenLedger extends CliScreen {
         for (Transaction t : ledger.findDebits()) {
             System.out.print(t.toScreenText());
         }
+        status = "OK";
 
     }
 
@@ -69,13 +59,14 @@ public class CliScreenLedger extends CliScreen {
         for (Transaction t : ledger.findCredits()) {
             System.out.print(t.toScreenText());
         }
+        status = "OK";
     }
 
     private void displayAllTransactions() {
         for (Transaction t : ledger.findAll()) {
             System.out.print(t.toScreenText());
         }
-
+        status = "OK";
     }
 
 }

@@ -18,7 +18,7 @@ public class CliScreenMain extends CliScreen {
                 L    Show the Ledger
                 X    Exit
             """;
-        prompt = """
+        menu_prompt = """
             Select an option (by letter):  \s
             """;
 
@@ -30,20 +30,14 @@ public class CliScreenMain extends CliScreen {
     @Override
     protected boolean doInput() {
         String input = requestStringInput();
-        switch (input.toUpperCase()){
-            case "D":
-                enterDeposit();
-                break;
-            case "P":
-                enterPayment();
-                break;
-            case "L":
-                showLedgerScreen();
-                break;
-            case "X":
+        switch (input.toUpperCase()) {
+            case "D" -> enterDeposit();
+            case "P" -> enterPayment();
+            case "L" -> showLedgerScreen();
+            case "X" -> {
                 return true;
-            default:
-                badInput();
+            }
+            default -> badInput();
         }
         return false;
 
