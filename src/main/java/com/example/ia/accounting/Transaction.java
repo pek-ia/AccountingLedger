@@ -8,11 +8,11 @@ import java.time.LocalTime;
 //   If a debit, amount is negative
 
 public class Transaction {
-    private LocalDate date;
-    private LocalTime time;
-    private String description;
-    private String payee;
-    private double amount;
+    private final LocalDate date;
+    private final LocalTime time;
+    private final String description;
+    private final String payee;
+    private final double amount;
 
     public Transaction(LocalDate date, LocalTime time, String description, String payee, double amount) {
         this.date = date;
@@ -34,7 +34,7 @@ public class Transaction {
     }
 
     public String toFileText(){
-        return String.format("%s|%s|%s|%s|amount", date, time, description, payee, amount);
+        return String.format("%s|%s|%s|%s|%8.2f", date, time, description, payee, amount);
     }
 
     public LocalDate getDate() {
