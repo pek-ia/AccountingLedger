@@ -30,7 +30,7 @@ public class CliScreenMain extends CliScreen {
     @Override
     protected boolean doInput() {
         String input = requestStringInput();
-        switch (input){
+        switch (input.toUpperCase()){
             case "D":
                 enterDeposit();
                 break;
@@ -38,7 +38,7 @@ public class CliScreenMain extends CliScreen {
                 enterPayment();
                 break;
             case "L":
-                showLedger();
+                showLedgerScreen();
                 break;
             case "X":
                 return true;
@@ -49,15 +49,12 @@ public class CliScreenMain extends CliScreen {
 
     }
 
-    private void showLedgerMenu() {
-        System.out.println("Showing Ledger menu");
+    private void showLedgerScreen() {
+        System.out.println("Showing Ledger screen");
+        AccountingLedgerApp.ledgerScreen.show();
     }
 
-    private void showLedger(){
-        for (Transaction t: ledger.findAll()){
-            System.out.print(t.toScreenText());
-        }
-    }
+
 
     private void enterPayment() {
 
