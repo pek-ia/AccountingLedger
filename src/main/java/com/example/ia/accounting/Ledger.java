@@ -14,9 +14,9 @@ import java.util.Collections;
 
 public class Ledger {
 
-    private ArrayList<Transaction> transactions = new ArrayList<>();
-    private String ledgerFileName;
-    private BufferedReader ledgerFileReader;
+    private final ArrayList<Transaction> transactions = new ArrayList<>();
+    private final String ledgerFileName;
+    private final BufferedReader ledgerFileReader;
 
     public Ledger(String ledgerFile) {
         this.ledgerFileName = ledgerFile;
