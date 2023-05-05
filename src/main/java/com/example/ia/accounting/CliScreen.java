@@ -25,18 +25,31 @@ public class CliScreen {
         this.menu = defaultMenu;
     }
 
+
     private Ledger ledger;
     private String prompt;
     private String menu;
     private String heading;
 
     public void show() {
-        clearScreen();
-        printHeading();
-        printContents();
-        printMenu();
-        String input = requestInput();
+        while(true) {
+            clearScreen();
+            printHeading();
+            printContents();
+            printMenu();
+            String input = requestInput();
+            switch (input){
+                case "0":
+                    // Return to previous screen
+                    return;
+                default:
+                    // Unrecognized input - break out of loop to redisplay the menu
+                    break;
+            }
+        }
     }
+
+
 
     private String requestInput() {
         System.out.print(prompt);
