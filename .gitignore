@@ -12,6 +12,9 @@ target/
 *.iml
 *.ipr
 
+### IntelliJ artifacts - (JAR file)
+out/
+
 ### Eclipse ###
 .apt_generated
 .classpath
