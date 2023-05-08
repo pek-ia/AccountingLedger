@@ -39,8 +39,8 @@ public class Ledger {
         return new Transaction(date, time, description, payee, amount);
     }
 
-    private String toFileText(Transaction t){
-        return String.format("%s|%s|%s|%s|%8.2f", t.getDate(), t.getTime(), t.getDescription(), t.getPayee(), t.getAmount());
+    private String toFileText(Transaction t) {
+        return String.format("%s|%s|%s|%s|%.2f", t.getDate(), t.getTime(), t.getDescription(), t.getPayee(), t.getAmount());
     }
 
     // Reads ledger file into ArrayList
@@ -68,57 +68,69 @@ public class Ledger {
         return transactions.size();
     }
 
+    private void appendToFile(Transaction t) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ledgerFileName, true))) {
+            writer.newLine();
+            writer.write(toFileText(t));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void add(Transaction t) {
+
         transactions.add(t);
+        appendToFile(t);
+
     }
 
 
     /*
      *  FINDER METHODS
      */
-    public ArrayList<Transaction> findAll(){
+    public ArrayList<Transaction> findAll() {
         return transactions;
     }
 
-    public ArrayList<Transaction> findCredits(){
+    public ArrayList<Transaction> findCredits() {
         ArrayList<Transaction> values = new ArrayList<>();
-        for (Transaction t: transactions){
+        for (Transaction t : transactions) {
             if (t.getAmount() > 0.0) values.add(t);
         }
         Collections.sort(values);
         return values;
     }
 
-    public ArrayList<Transaction> findDebits(){
+    public ArrayList<Transaction> findDebits() {
         ArrayList<Transaction> values = new ArrayList<>();
-        for (Transaction t: transactions){
+        for (Transaction t : transactions) {
             if (t.getAmount() <= 0.0) values.add(t);
         }
         Collections.sort(values);
         return values;
     }
 
-    public ArrayList<Transaction> findLikePayee(String payee){
+    public ArrayList<Transaction> findLikePayee(String payee) {
         ArrayList<Transaction> values = new ArrayList<>();
-        for (Transaction t: transactions){
+        for (Transaction t : transactions) {
             if (t.getPayee().contains(payee)) values.add(t);
         }
         Collections.sort(values);
         return values;
     }
 
-    public ArrayList<Transaction> findByMonth(Month month){
+    public ArrayList<Transaction> findByMonth(Month month) {
         ArrayList<Transaction> values = new ArrayList<>();
-        for (Transaction t: transactions){
+        for (Transaction t : transactions) {
             if (t.getDate().getMonth().equals(month)) values.add(t);
         }
         Collections.sort(values);
         return values;
     }
 
-    public ArrayList<Transaction> findByYear(int year){
+    public ArrayList<Transaction> findByYear(int year) {
         ArrayList<Transaction> values = new ArrayList<>();
-        for (Transaction t: transactions){
+        for (Transaction t : transactions) {
             if (t.getDate().getYear() == year) values.add(t);
         }
         Collections.sort(values);

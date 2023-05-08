@@ -19,7 +19,7 @@ public class CliScreenReports extends CliScreen {
                 5    Search by Payer/Payee
                 0    Back to Ledger Menu
             """;
-        menu_prompt = """
+        menuPrompt = """
             Select an option (by number):  \s
             """;
 
@@ -29,7 +29,7 @@ public class CliScreenReports extends CliScreen {
 
 
     @Override
-    protected boolean doInput() {
+    protected boolean doInputUntilDone() {
         String input = requestStringInput();
         switch (input) {
             case "1" -> displayMonthToDate();

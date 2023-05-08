@@ -1,6 +1,5 @@
 package com.example.ia.accounting;
 
-// TODO Write transactions to file
 // TODO export JAR file
 
 

@@ -15,7 +15,7 @@ public class CliScreenLedger extends CliScreen {
                     R    Reports Menu
                     H    Return to Home
                 """;
-        menu_prompt = """
+        menuPrompt = """
                 Select an option (by letter):  \s
                 """;
 
@@ -25,7 +25,7 @@ public class CliScreenLedger extends CliScreen {
 
 
     @Override
-    protected boolean doInput() {
+    protected boolean doInputUntilDone() {
         String input = requestStringInput();
         switch (input.toUpperCase()) {
             case "A" -> displayAllTransactions();
