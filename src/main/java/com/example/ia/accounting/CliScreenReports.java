@@ -60,11 +60,13 @@ public class CliScreenReports extends CliScreen {
     }
 
     private void displayPreviousMonth() {
-        displayTransactions(ledger.findByMonth(LocalDate.now().getMonth().minus(1)));
+        LocalDate now = LocalDate.now();
+        displayTransactions(ledger.findByMonthAndYear(now.getMonth().minus(1), now.getYear()));
     }
 
     private void displayMonthToDate() {
-        displayTransactions(ledger.findByMonth(LocalDate.now().getMonth()));
+        LocalDate now = LocalDate.now();
+        displayTransactions(ledger.findByMonthAndYear(now.getMonth(), now.getYear()));
     }
 
 }

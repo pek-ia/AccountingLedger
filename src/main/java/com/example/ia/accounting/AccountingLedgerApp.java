@@ -5,13 +5,24 @@ package com.example.ia.accounting;
 
 public class AccountingLedgerApp {
 
-    private static final String defaultLedgerFile = "./src/main/resources/transactions.csv";
+    private static final String defaultLedgerFile = "transactions.csv";
 
     static CliScreen mainScreen;
     static CliScreen ledgerScreen;
     static CliScreen reportsScreen;
     public static void main(String[] args) {
-        Ledger ledger = new Ledger(defaultLedgerFile);
+
+        String ledgerFileName = null;
+
+        if (args.length == 2){
+            ledgerFileName = args[1];
+        }
+        else {
+            ledgerFileName = defaultLedgerFile;
+        }
+
+
+        Ledger ledger = new Ledger(ledgerFileName);
 
         mainScreen = new CliScreenMain(ledger);
         ledgerScreen = new CliScreenLedger(ledger);

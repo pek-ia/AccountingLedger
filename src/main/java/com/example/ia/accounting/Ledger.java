@@ -119,10 +119,11 @@ public class Ledger {
         return values;
     }
 
-    public ArrayList<Transaction> findByMonth(Month month) {
+    public ArrayList<Transaction> findByMonthAndYear(Month month, int year) {
         ArrayList<Transaction> values = new ArrayList<>();
         for (Transaction t : transactions) {
-            if (t.getDate().getMonth().equals(month)) values.add(t);
+            if (t.getDate().getMonth().equals(month)
+                    && t.getDate().getYear() == year) values.add(t);
         }
         Collections.sort(values);
         return values;
@@ -131,7 +132,7 @@ public class Ledger {
     public ArrayList<Transaction> findByYear(int year) {
         ArrayList<Transaction> values = new ArrayList<>();
         for (Transaction t : transactions) {
-            if (t.getDate().getYear() == year) values.add(t);
+            if (t.getDate().getYear() == year ) values.add(t);
         }
         Collections.sort(values);
         return values;

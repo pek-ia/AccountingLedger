@@ -28,15 +28,15 @@ import java.util.Scanner;
  *   String status
  *   Scanner scanner
  *
- *   This class is not very versatile.  It expects to work with
- *   the following domain classes
+ *   This superclass is not really very versatile.  It is specific to
+ *   the AccountingLedger app and expects to work with
+ *   the following domain classes:
  *
- *   Ledger
- *   Transaction
+ *   Ledger       - it uses the ledger to search for transactions
+ *   Transaction  - it formats transactions for display
  *
- * A subclass must provide its own constructor
- *
- * A subclass must @Override the following methods:
+ * A subclass must provide its own constructor, and
+ * must @Override the following methods:
  *
  *   doInputUntilDone()
  *
@@ -119,7 +119,9 @@ public class CliScreen {
     }
 
     private void displayHeading() {
+        System.out.print("\033[33m");  // Yellow
         System.out.println(heading);
+        System.out.print("\033[37m");  // White
     }
 
     private void displayMenu() {
@@ -135,8 +137,8 @@ public class CliScreen {
     }
 
     private void clearScreen() {
-        // Print ANSI escape sequence to clear terminal screen
-        System.out.print("\033[2J");
+        // Print some ANSI escape sequence to clear terminal screen :-)
+        System.out.print("\033[2J\033[H");
     }
 
     /**
@@ -148,9 +150,11 @@ public class CliScreen {
      *
      */
     protected boolean doInputUntilDone() {
-        boolean done = false;
         String input = requestStringInput();
         switch (input) {
+            // A menu subclass must provide its own case to deal
+            // with the choices that it displays
+
             // Examples of usage:
 
             // Call a function
@@ -160,9 +164,9 @@ public class CliScreen {
             default -> badInput();
 
             // Done - return to the caller that displayed this screen
-            case "X" -> { done = true; }
+            case "X" -> { return true; }
         }
-        return done;
+        return false;  // Not done
     }
 
     private void doSomething() {
@@ -182,7 +186,7 @@ public class CliScreen {
     // INPUT METHODS FOR TRANSACTION-RELATED TYPES
 
     protected String requestStringInput() {
-        System.out.print(menuPrompt);
+        displayMenuPrompt();
         return scanner.nextLine();
 
     }
@@ -240,10 +244,7 @@ public class CliScreen {
      * @return A formatted string for display on the CLI
      */
     protected String toScreenText(Transaction t){
-        return String.format("%10s  %-30s %-30s %8.2f", t.getDate(), t.getPayee(), t.getDescription(), t.getAmount());
+        return String.format("%10s  %-25s %-30s %8.2f", t.getDate(), t.getPayee(), t.getDescription(), t.getAmount());
     }
-
-
-
 
 }
